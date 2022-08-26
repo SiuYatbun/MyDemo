@@ -13,13 +13,22 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
+import java.io.IOException;
 import java.util.Objects;
 import java.util.Properties;
 
 public class MailUtil {
     private static final Logger logger = LoggerFactory.getLogger(MailUtil.class);
-    private static final Properties props = PropertiesUtil.getProperties(new ClassPathResource("mail-dev" + Ext.SETTING).getPath());
     private static final String MEETING_TEMPLATE = "meetingInvitationTemplate.txt";
+    public static final Properties PROPS;
+
+    static {
+        try {
+            PROPS = PropertiesUtil.getProperties(new ClassPathResource("mail-dev" + Ext.SETTING).getFile());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static void sendCommonMail(String to, String subject, String content) {
         send(to, subject, content, null);
@@ -30,7 +39,7 @@ public class MailUtil {
     }
 
     private static void send(String to, String subject, String content, MeetingData meetingData) {
-        new Thread(() -> doSend(to, subject, content, meetingData));
+        doSend(to, subject, content, meetingData);
     }
 
     private static void doSend(String to, String subject, String content, MeetingData meetingData) {
@@ -38,14 +47,14 @@ public class MailUtil {
         MimeMessage message = new MimeMessage(session);
         try {
             //发件人
-            message.setFrom(new InternetAddress(props.getProperty("user")));
+            message.setFrom(new InternetAddress(PROPS.getProperty("user")));
             //收件人
             String[] tos = to.split(";");
             Address[] addresses = new InternetAddress[tos.length];
-            for (int i = 0; i < to.length(); i++) {
+            for (int i = 0; i < tos.length; i++) {
                 addresses[i] = new InternetAddress(tos[i]);
             }
-            message.setRecipients(Message.RecipientType.TO, addresses);
+            message.addRecipients(Message.RecipientType.TO, addresses);
             //标题
             message.setSubject(subject);
             //正文
@@ -76,11 +85,11 @@ public class MailUtil {
         Authenticator authenticator = new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                String user = props.getProperty("user");
-                String password = props.getProperty("password");
+                String user = PROPS.getProperty("user");
+                String password = PROPS.getProperty("password");
                 return new PasswordAuthentication(user, password);
             }
         };
-        return Session.getInstance(props, authenticator);
+        return Session.getInstance(PROPS, authenticator);
     }
 }

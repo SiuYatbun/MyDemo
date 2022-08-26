@@ -19,12 +19,15 @@ public class PropertiesUtil {
         List<String> list = new ArrayList<>();
         int begin = 0;
         for(int i = 0; i < chars.length; i++){
-            if(chars[i] == '\n'){
+            if(chars[i] == '\n' || i == chars.length - 1){
+                if(i == chars.length - 1){
+                    i++;
+                }
                 list.add(new String(chars, begin, i - begin).trim());
                 begin = i + 1;
             }
         }
-        Map<String, String> map = list.stream().collect(Collectors.toMap(
+        Map<String, String> map = list.stream().filter(str -> str.contains("=") && !str.startsWith("#")).collect(Collectors.toMap(
                 str -> str.split("=")[0],
                 str -> str.split("=")[1]
         ));

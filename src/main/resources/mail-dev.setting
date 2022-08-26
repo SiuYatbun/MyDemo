@@ -1,7 +1,9 @@
-host=smtp.qq.com
-port=587
 user=281380366@qq.com
 password=yommedoaunlrbifg
 mail.protocol=smtp
+mail.smtp.host=smtp.qq.com
+mail.smtp.port=587
 mail.smtp.auth=true
-mail.smtp.debug=true
+mail.debug=true
+
+receiver=yatbun86606212@outlook.com;
