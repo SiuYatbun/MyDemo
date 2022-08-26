@@ -1,0 +1,7 @@
+host=smtp.qq.com
+port=587
+user=281380366@qq.com
+password=yommedoaunlrbifg
+mail.protocol=smtp
+mail.smtp.auth=true
+mail.smtp.debug=true
