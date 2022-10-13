@@ -5,13 +5,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import java.io.IOException;
 
 @Controller
 public class IndexController {
     @RequestMapping("/index")
-    public String index(HttpServletRequest request) {
+    public String index() {
         return "index";
     }
 
@@ -45,5 +44,10 @@ public class IndexController {
     @RequestMapping("/rdt2")// 重定向 2
     public String rdt2() {
         return "redirect:file";
+    }
+
+    @RequestMapping("login")
+    public String login(){
+        return "login";
     }
 }
