@@ -2,26 +2,32 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <!-- 使starter可忽略版本号(默认为该version) -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.0.0-M3</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
     <groupId>com.example</groupId>
     <artifactId>MyDemo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>MyDemo</name>
     <description>MyDemo</description>
+
     <properties>
         <java.version>17</java.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
@@ -32,25 +38,25 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--        查看偏向锁-->
+        <!-- 查看偏向锁 -->
         <dependency>
             <groupId>org.openjdk.jol</groupId>
             <artifactId>jol-core</artifactId>
             <version>0.16</version>
         </dependency>
-        <!--        JSR-303标准校验-->
+        <!-- SR-303标准校验 -->
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>2.0.1.Final</version>
         </dependency>
-        <!--        邮箱-->
+        <!-- 邮箱 -->
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
             <version>1.5.0-b01</version>
         </dependency>
-        <!--        文本替换-->
+        <!-- 文本替换 -->
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
@@ -58,12 +64,19 @@
         </dependency>
     </dependencies>
 
+    <!-- 创建可执行jar -->
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>3.0.0-M3</version>
+                <!--
+                打包时跳过test
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+                 -->
             </plugin>
         </plugins>
     </build>
@@ -77,6 +90,8 @@
             </snapshots>
         </repository>
     </repositories>
+
+    <!-- 使用里程碑或快照版本 -->
     <pluginRepositories>
         <pluginRepository>
             <id>spring-milestones</id>
