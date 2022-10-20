@@ -46,7 +46,7 @@ public class IndexController {
         return "redirect:file";
     }
 
-    @RequestMapping("login")
+    @RequestMapping("/login")
     public String login(){
         return "login";
     }
